@@ -1,0 +1,25 @@
+streamlit
+PyPDF2
+langchain
+google-generativeai
+faiss-cpu
+python-dotenv
+fastapi 
+uvicorn
+langchain-community
+gTTS
+SpeechRecognition
+kivy
+
+# langchain-google-genai
+
+
+
+
+
+
+
+#http://127.0.0.1:8000/docs
+#conda create -p vdemo python==3.11 -y
+#pip install -r requirements.txt
+#.\vatar\Scripts\activate
