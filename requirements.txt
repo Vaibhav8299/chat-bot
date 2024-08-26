@@ -9,7 +9,7 @@ uvicorn
 langchain-community
 gTTS
 SpeechRecognition
-kivy
+langchain_google_genai
 
 # langchain-google-genai
 
