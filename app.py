@@ -74,14 +74,21 @@ def user_input(user_question, selected_language):
     chain = get_conversational_chain()
     response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
     
-    translated_response = translate_text(response["output_text"], selected_language)
+    if "output_text" in response and response["output_text"].strip():
+        translated_response = translate_text(response["output_text"], selected_language)
+    else:
+        translated_response = "No valid response generated from the AI model."
+    
     return translated_response
 
 def text_to_speech(text, language='en'):
-    tts = gTTS(text=text, lang=language)
-    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
-    tts.save(temp_file.name)
-    return temp_file.name
+    if text.strip():
+        tts = gTTS(text=text, lang=language)
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
+        tts.save(temp_file.name)
+        return temp_file.name
+    else:
+        return None
 
 def main():
     st.set_page_config(page_title="AI-Powered PDF Analyzer", page_icon="📚")
@@ -110,7 +117,10 @@ def main():
                 st.text_area("Reply", value=response, height=200)
                 
                 audio_file = text_to_speech(response, language)
-                st.audio(audio_file, format='audio/mp3')
+                if audio_file:
+                    st.audio(audio_file, format='audio/mp3')
+                else:
+                    st.warning("No audio generated due to empty response text.")
             else:
                 st.warning("Please enter a question.")
 
